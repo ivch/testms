@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+service PortDomainService {
+    rpc Save (SaveRequest) returns (SaveResponse) {
+    }
+
+    rpc Get (GetRequest) returns (GetResponse) {
+    }
+}
+
+message Coordinates {
+    float lat = 1;
+    float lng = 2;
+}
+
+message SaveRequest {
+    string name = 1;
+    string city = 2;
+    string country = 3;
+    Coordinates coords = 4;
+}
+
+message SaveResponse {
+    string name = 1;
+}
+
+message GetRequest {
+    string name = 1;
+}
+
+message GetResponse {
+    string name = 1;
+    string city = 2;
+    string country = 3;
+    Coordinates coords = 4;
+}
