@@ -49,7 +49,7 @@ func (p *parser) run() {
 	}
 
 	for {
-		name, err := dec.Token()
+		id, err := dec.Token()
 		if err == io.EOF {
 			break
 		}
@@ -66,7 +66,8 @@ func (p *parser) run() {
 			}
 
 			req := api.SaveRequest{
-				Name:    fmt.Sprint(name),
+				Id:      fmt.Sprint(id),
+				Name:    entity.Name,
 				City:    entity.City,
 				Country: entity.Country,
 			}
@@ -83,93 +84,3 @@ func (p *parser) run() {
 		}
 	}
 }
-
-//dec := json.NewDecoder(f)
-//
-//t, err := dec.Token()
-//if err != nil {
-//	log.Fatal(err)
-//}
-//
-//fmt.Printf("%T: %v\n", t, t)
-//
-//i := 0
-//for {
-//	fmt.Println(">>>>>>>")
-//	key, err := dec.Token()
-//	if err == io.EOF {
-//		break
-//	}
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	fmt.Printf("%T: %v\n", key, key)
-//
-//	if dec.More() {
-//		fmt.Println("=========")
-//		i++
-//		var m Port
-//		//var k string
-//		//var v Port
-//		////	//	var m map[string]Port
-//		////	//	// decode an array value (Message)
-//		err := dec.Decode(&m)
-//		if err != nil {
-//			log.Fatal(err)
-//		}
-//
-//		fmt.Println(m)
-//
-//		//req := api.SaveRequest{
-//		//	Name:    fmt.Sprint(key),
-//		//	City:    m.City,
-//		//	Country: m.Country,
-//		//	Coords:  m.Coordinates,
-//		//}
-//		//
-//		//res, err := c.Save(ctx, &req)
-//		//if err != nil {
-//		//	log.Fatalf("Save failed: %v", err)
-//		//}
-//		//log.Printf("Create result: <%+v>\n\n", res)
-//
-//		//err = dec.Decode(&v)
-//		//if err != nil {
-//		//	log.Fatal(err)
-//		//}
-//		//
-//		//fmt.Println(k, v)
-//		//fmt.Printf(" (more)")
-//	}
-//
-//	if i > 1 {
-//		break
-//	}
-//	fmt.Printf("\n")
-//}
-
-// while the array contains values
-//PrintMemUsage()
-//for dec.More() {
-//	var m interface{}
-//	//	var m map[string]Port
-//	//	// decode an array value (Message)
-//	err := dec.Decode(&m)
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//
-//	fmt.Println(m)
-//	//	PrintMemUsage()
-//	t, _ = dec.Token()
-//	fmt.Printf("%T: %v\n", t, t)
-//	time.Sleep(500 * time.Millisecond)
-//}
-//
-//// read closing bracket
-//t, err = dec.Token()
-//if err != nil {
-//	log.Fatal(err)
-//}
-//PrintMemUsage()
-//fmt.Printf("%T: %v\n", t, t)

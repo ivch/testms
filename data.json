@@ -1,0 +1,29 @@
+{
+  "AEAJM": {
+    "name": "Ajman",
+    "city": "Ajman",
+    "country": "United Arab Emirates",
+    "coordinates": [
+      55.5136433,
+      25.4052165
+    ]
+  },
+  "AEAUH": {
+    "name": "Abu Dhabi",
+    "coordinates": [
+      54.37,
+      24.47
+    ],
+    "city": "Abu Dhabi",
+    "country": "United Arab Emirates"
+  },
+  "AEDXB": {
+    "name": "Dubai",
+    "coordinates": [
+      55.27,
+      25.25
+    ],
+    "city": "Dubai",
+    "country": "United Arab Emirates"
+  }
+}

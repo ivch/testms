@@ -33,12 +33,12 @@ func New(client api.PortDomainServiceClient, timeout time.Duration, ch <-chan ap
 	return &s
 }
 
-func (s *service) Get(name string) (*api.GetResponse, error) {
+func (s *service) Get(id string) (*api.GetResponse, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), s.clientTimeout)
 	defer cancel()
 
 	req := api.GetRequest{
-		Name: name,
+		Id: id,
 	}
 
 	res, err := s.portsClient.Get(ctx, &req)

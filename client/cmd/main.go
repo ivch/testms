@@ -19,6 +19,7 @@ import (
 )
 
 const (
+	defaultGRPCHost      = "localhost"
 	defaultGRPCPort      = "8081"
 	defaultHTTPPort      = "8080"
 	defaultClientTimeout = "15"
@@ -26,8 +27,10 @@ const (
 )
 
 func init() {
-	if err := godotenv.Load(".env"); err != nil {
-		log.Fatal("unable to load env file")
+	if err := godotenv.Load("/run/secrets/client_env"); err != nil {
+		if err := godotenv.Load(".env.dist"); err != nil {
+			log.Fatal("unable to load env file")
+		}
 	}
 }
 
@@ -84,7 +87,10 @@ func initDeps() (api.PortDomainServiceClient, time.Duration, chan api.SaveReques
 
 	timeout := time.Duration(int64(intT)) * time.Second
 
-	conn, err := grpc.Dial(":"+getenv("GRPC_POPRT", defaultGRPCPort), grpc.WithInsecure())
+	conn, err := grpc.Dial(fmt.Sprintf("%s:%s",
+		getenv("GRPC_HOST", defaultGRPCHost),
+		getenv("GRPC_PORT", defaultGRPCPort)),
+		grpc.WithInsecure())
 	if err != nil {
 		return nil, 0, nil, "", err
 	}

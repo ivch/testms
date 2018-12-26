@@ -1,8 +1,28 @@
-version: '2'
+version: '2.1'
 
 services:
+  client:
+    image: ivchms:client
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./client/cmd/.env:/run/secrets/client_env"
+      - "./data.json:/testms/data.json"
+    depends_on:
+      - server
+
+  server:
+    image: ivchms:server
+    expose:
+      - 8081
+    volumes:
+      - "./server/cmd/.env:/run/secrets/server_env"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
   mysql:
-    container_name: testmsdb
+    container_name: ivch_testmsdb
     image: mysql:5.7
     user: "1000:50"
     expose:
@@ -16,3 +36,7 @@ services:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: testms
     command: "--init-file /schema.sql"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5

@@ -14,10 +14,11 @@ message Coordinates {
 }
 
 message SaveRequest {
-    string name = 1;
-    string city = 2;
-    string country = 3;
-    Coordinates coords = 4;
+    string id = 1;
+    string name = 2;
+    string city = 3;
+    string country = 4;
+    Coordinates coords = 5;
 }
 
 message SaveResponse {
@@ -25,12 +26,13 @@ message SaveResponse {
 }
 
 message GetRequest {
-    string name = 1;
+    string id = 1;
 }
 
 message GetResponse {
-    string name = 1;
-    string city = 2;
-    string country = 3;
-    Coordinates coords = 4;
+    string id = 1;
+    string name = 2;
+    string city = 3;
+    string country = 4;
+    Coordinates coords = 5;
 }

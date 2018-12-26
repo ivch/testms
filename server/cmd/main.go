@@ -14,8 +14,10 @@ import (
 )
 
 func init() {
-	if err := godotenv.Load(".env"); err != nil {
-		log.Fatal("unable to load env file")
+	if err := godotenv.Load("/run/secrets/server_env"); err != nil {
+		if err := godotenv.Load(".env.dist"); err != nil {
+			log.Fatal("unable to load env file")
+		}
 	}
 }
 
@@ -39,14 +41,22 @@ func main() {
 }
 
 func initDeps() (*sql.DB, error) {
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/%s",
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASS"),
 		os.Getenv("DB_HOST"),
+		os.Getenv("DB_PORT"),
 		os.Getenv("DB_SCHEMA")))
 	if err != nil {
 		return nil, err
 	}
 
 	return db, nil
+}
+
+func getenv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
 }

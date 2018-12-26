@@ -15,4 +15,7 @@
 .data
 
 server/vendor
+server/coverage.html
+
 client/vendor
+client/coverage.html

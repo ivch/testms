@@ -2,6 +2,7 @@ package client
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -17,7 +18,7 @@ type ErrorResponse struct {
 func New(svc client.Service) *mux.Router {
 	r := mux.NewRouter()
 
-	r.Methods("GET", "HEAD").Path("/v1/port/{name:[A-Za-z]+}").HandlerFunc(getEndpoint(svc))
+	r.Methods("GET", "HEAD").Path("/v1/port/{id:[A-Z]+}").HandlerFunc(getEndpoint(svc))
 	// more http endpoints
 
 	return r
@@ -27,9 +28,14 @@ func getEndpoint(svc client.Service) func(w http.ResponseWriter, r *http.Request
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 
-		name := vars["name"]
+		id := vars["id"]
 
-		res, err := svc.Get(name)
+		if len(id) != 5 {
+			encodeHTTPError(errors.New("id should be 5 characters long"), w)
+			return
+		}
+
+		res, err := svc.Get(id)
 		if err != nil {
 			encodeHTTPError(err, w)
 			return
