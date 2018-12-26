@@ -1,8 +1,6 @@
 version: '2'
 
 services:
-  server:
-
   mysql:
     container_name: testmsdb
     image: mysql:5.7

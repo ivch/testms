@@ -13,3 +13,6 @@
 
 .idea
 .data
+
+server/vendor
+client/vendor
